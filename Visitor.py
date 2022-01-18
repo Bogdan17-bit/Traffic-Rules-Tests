@@ -1,9 +1,17 @@
 from flask import session
 from werkzeug.security import generate_password_hash
 from DataBase import DataBase, Questions, Answers, Themes, Users
+from datetime import datetime
 
 
 class Visitor:
+    @classmethod
+    def save_results(cls, right_answers_number):
+        current_data = datetime.now().date()
+        user_name = cls.get_name()
+        right_answers_number = right_answers_number
+        pass
+
     @classmethod
     def register(cls, exist_request):
         temp_user = cls.create_temp_user_from_sign(exist_request)

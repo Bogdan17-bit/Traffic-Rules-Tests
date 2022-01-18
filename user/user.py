@@ -8,7 +8,17 @@ from random import shuffle
 user = Blueprint('user', __name__, static_folder='static', template_folder='templates')
 
 
-@user.route('/')
+@user.route('/', methods=("GET", "POST"))
+def link_on_main():
+    return redirect(url_for('user.home'))
+
+
+@user.route('/statistics',  methods=("GET", "POST"))
+def statistics():
+    return render_template('user/statistics.html', user=Visitor)
+
+
+@user.route('/random_questions')
 def home():
     list_questions = DataBase.get_questions()
     numbers = list(range(1, 39))
@@ -59,3 +69,9 @@ def sign():
 def send():
     print(request.form['submit_button'])
     return redirect(url_for('home'))
+
+
+@user.route('/questions_without_answers',  methods=("GET", "POST"))
+def only_questions():
+    return render_template('user/questions.html', user=Visitor)
+
