@@ -6,6 +6,10 @@ from sqlalchemy.sql.expression import func, select
 
 class DataBase:
     @classmethod
+    def get_list_questions_from_theme(cls, theme):
+        return Questions.query.filter_by(theme=theme)
+
+    @classmethod
     def get_history_user(cls, user_name):
         return Users.query.filter_by(login=user_name).first()
 

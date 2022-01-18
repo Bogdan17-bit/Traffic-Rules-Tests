@@ -3,42 +3,61 @@
 {% block content %}
 
 <link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/table.css') }}"/>
+<link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/custom-buttons.css') }}"/>
 
 <center>
 
-	<table class="table">
+	<form id="test" method="post" action="http://localhost:5000/home/test-from-theme">
 
-		<thead>
+		<table class="table">
 
-			<tr>
+			<thead>
 
-				<th colspan="2">Перелік усіх існуючих тем</th>
+				<tr>
 
-			</tr>
+					<th colspan="2">Перелік усіх існуючих тем</th>
 
-		</thead>
+				</tr>
 
-		{% for one in themes %}
+			</thead>
 
-		<tbody>
+			{% for one in themes %}
 
-			<tr>
+			<tbody>
 
-				<td width="80%"> {{ loop.index }} {{ one.text }}</td>
+				<tr>
 
-                <td width="20%">
+					<td width="80%">
 
-                    <img src="data:;base64, {{ images[loop.index-1]}}" width="150px;">
+						<table>
 
-                </td>
+							<tr><td style="border-bottom:0px;">{{ loop.index }} {{ one.text }}</td></tr>
 
-            </tr>
+							<tr>
+								<td style="border-bottom:0px;">
+									<button value="{{ one.text }}" class="button button1" name="start_button" id="submit_button" style="font-size:15px; margin-bottom:10px;" > Розпочати тест</button>
+								</td>
+							</tr>
 
-		</tbody>
+						</table>
 
-		{% endfor %}
+					</td>
 
-	</table>
+					<td width="20%">
+
+						<img src="data:;base64, {{ images[loop.index-1]}}" width="150px;">
+
+					</td>
+
+				</tr>
+
+			</tbody>
+
+			{% endfor %}
+
+		</table>
+
+	</form>
 
 </center>
 

@@ -100,3 +100,14 @@ def get_refreshed_list_images():
     for theme in all_themes_from_db:
         all_images.append(base64.b64encode(theme.img).decode('ascii'))
     return all_images
+
+
+@user.route('/test-from-theme', methods=("GET", "POST"))
+def test_from_theme():
+    theme = request.form['start_button']
+    questions = DataBase.get_list_questions_from_theme(theme)
+    counters = 0
+    for question in questions:
+        question.img = base64.b64encode(question.img).decode('ascii')
+        counters += 1
+    return render_template('user/test-from-theme.html', questions=questions,  user=Visitor, theme=theme, test_len=counters)

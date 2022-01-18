@@ -7,7 +7,7 @@ from datetime import datetime
 class Visitor:
     @classmethod
     def test_is_pass(cls, number_correct, number_all_answers):
-        if cls.percent_correct(number_correct, number_all_answers) >= 90:
+        if cls.percent_correct(number_correct, number_all_answers) >= 80:
             return True
         else:
             return False
