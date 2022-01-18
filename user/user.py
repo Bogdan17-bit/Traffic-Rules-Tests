@@ -15,10 +15,7 @@ def home():
     shuffle(numbers)
     last_lst = []
     numbers = numbers[:5]
-    Visitor.save_numbers_questions(numbers)
     for number in numbers:
-        print("random..." + str(number))
-        print("normal object " + str(list_questions[number].id-1))
         last_lst.append(list_questions[number])
     for one in last_lst:
         one.img = base64.b64encode(one.img).decode('ascii')
@@ -60,11 +57,5 @@ def sign():
 
 @user.route('/send', methods=("GET", "POST"))
 def send():
-    list_numbers_questions = Visitor.get_numbers_questions()
-    print(list_numbers_questions)
-    counter_right_answers = 0
-    for current_number in list_numbers_questions:
-        if request.form.get('group'+str(current_number)) == "True":
-            counter_right_answers += 1
-    print(counter_right_answers)
+    print(request.form['submit_button'])
     return redirect(url_for('home'))

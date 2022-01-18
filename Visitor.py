@@ -5,20 +5,6 @@ from DataBase import DataBase, Questions, Answers, Themes, Users
 
 class Visitor:
     @classmethod
-    def save_numbers_questions(cls, list_numbers):
-        session['number_questions'] = list_numbers
-        session.modified = True
-
-    @classmethod
-    def get_numbers_questions(cls):
-        return session.get('number_questions')
-
-    @classmethod
-    def delete_numbers_questions(cls):
-        session.pop('number_questions')
-        session.modified = True
-
-    @classmethod
     def register(cls, exist_request):
         temp_user = cls.create_temp_user_from_sign(exist_request)
         if DataBase.is_registered(temp_user):
