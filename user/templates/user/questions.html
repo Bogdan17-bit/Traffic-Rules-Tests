@@ -1,1 +1,45 @@
 {% extends "user/base.html" %}
+
+{% block content %}
+
+<link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/table.css') }}"/>
+
+<center>
+
+	<table class="table">
+
+		<thead>
+
+			<tr>
+
+				<th colspan="2">Перелік усіх існуючих тем</th>
+
+			</tr>
+
+		</thead>
+
+		{% for one in themes %}
+
+		<tbody>
+
+			<tr>
+
+				<td width="80%"> {{ loop.index }} {{ one.text }}</td>
+
+                <td width="20%">
+
+                    <img src="data:;base64, {{ images[loop.index-1]}}" width="150px;">
+
+                </td>
+
+            </tr>
+
+		</tbody>
+
+		{% endfor %}
+
+	</table>
+
+</center>
+
+{% endblock %}

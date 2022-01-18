@@ -6,8 +6,22 @@ from sqlalchemy.sql.expression import func, select
 
 class DataBase:
     @classmethod
+    def get_history_user(cls, user_name):
+        return Users.query.filter_by(login=user_name).first()
+
+    @classmethod
+    def get_themes(cls):
+        return Themes.query.all()
+
+    @classmethod
     def get_questions(cls):
         return Questions.query.all()
+
+    @classmethod
+    def create_and_save_field_in_history(cls, user_name, current_data, numbers, percent, test_is_pass):
+        find_user = Users.query.filter_by(login=user_name).first()
+        new_record = History(user_id=find_user.id, correct_answers_number=numbers, correct_answers_percent=percent, complete=test_is_pass, date=current_data)
+        cls.load_object(new_record)
 
     @classmethod
     def is_authorized(cls, login_user):

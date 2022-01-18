@@ -24,19 +24,27 @@
 
 		</thead>
 
-		{% for index in range(20) %}
+		{% for test_completed in tests %}
 
 		<tbody>
 
 			<tr>
 
-				<td>Gloria</td>
+				<td align="center"> {{ test_completed.date }} </td>
 
-				<td>Reeves</td>
+				<td align="center"> {{ test_completed.correct_answers_number }} </td>
 
-				<td>67439</td>
+				<td align="center"> {{ test_completed.correct_answers_percent }} </td>
 
-				<td>10/18/1985</td>
+				{% if test_completed.complete %}
+
+				<td align="center"> Так</td>
+
+				{% else %}
+
+				<td align="center"> Ні </td>
+
+				{% endif %}
 
 			</tr>
 

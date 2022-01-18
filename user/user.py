@@ -1,11 +1,21 @@
 import base64
-
+from functools import wraps
 from flask import Flask, render_template, request, redirect, url_for, make_response, Blueprint
 import time
 from Visitor import Visitor, DataBase
+from Admin import Admin
 from random import shuffle
 
 user = Blueprint('user', __name__, static_folder='static', template_folder='templates')
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if Visitor.is_authorized() is not True:
+            return redirect(url_for('user.login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @user.route('/', methods=("GET", "POST"))
@@ -14,8 +24,13 @@ def link_on_main():
 
 
 @user.route('/statistics',  methods=("GET", "POST"))
+@login_required
 def statistics():
-    return render_template('user/statistics.html', user=Visitor)
+    results_tests = DataBase.get_history_user(Visitor.get_name())
+    if results_tests.tests is not None:
+        return render_template('user/statistics.html', user=Visitor, tests=results_tests.tests)
+    else:
+        return render_template('user/statistics.html', user=Visitor)
 
 
 @user.route('/random_questions')
@@ -55,7 +70,7 @@ def sign():
             return response
         else:# если пользователь авторизован, остается на этой же странице и выходит из текущего аккаунта
             Visitor.make_anonymous()
-            return render_template(url_for('home', user=Visitor))
+            return redirect(url_for('home', user=Visitor))
     elif request.method == "POST":
         if Visitor.register(request):
             Visitor.remember_me(request.form['username'], request.form['password'])
@@ -68,10 +83,20 @@ def sign():
 @user.route('/send', methods=("GET", "POST"))
 def send():
     print(request.form['submit_button'])
+    if Visitor.is_authorized():
+        Visitor.save_results(int(request.form['submit_button']), 5)
     return redirect(url_for('home'))
 
 
 @user.route('/questions_without_answers',  methods=("GET", "POST"))
+@login_required
 def only_questions():
-    return render_template('user/questions.html', user=Visitor)
+    return render_template('user/questions.html', user=Visitor, themes=DataBase.get_themes(), images=get_refreshed_list_images())
 
+
+def get_refreshed_list_images():
+    all_themes_from_db = Admin.get_list_themes()
+    all_images = []
+    for theme in all_themes_from_db:
+        all_images.append(base64.b64encode(theme.img).decode('ascii'))
+    return all_images

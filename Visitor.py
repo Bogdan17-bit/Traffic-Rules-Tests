@@ -6,11 +6,23 @@ from datetime import datetime
 
 class Visitor:
     @classmethod
-    def save_results(cls, right_answers_number):
-        current_data = datetime.now().date()
-        user_name = cls.get_name()
-        right_answers_number = right_answers_number
-        pass
+    def test_is_pass(cls, number_correct, number_all_answers):
+        if cls.percent_correct(number_correct, number_all_answers) >= 90:
+            return True
+        else:
+            return False
+
+    @classmethod
+    def percent_correct(cls, number_correct, number_all_answers):
+        return 100 / number_all_answers * number_correct
+
+    @classmethod
+    def save_results(cls, right_answers_number, number_all_answers):
+        DataBase.create_and_save_field_in_history(user_name=cls.get_name(),
+                                                  current_data=datetime.now().date(),
+                                                  numbers=right_answers_number,
+                                                  percent=cls.percent_correct(right_answers_number, number_all_answers),
+                                                  test_is_pass=cls.test_is_pass(right_answers_number, number_all_answers))
 
     @classmethod
     def register(cls, exist_request):
