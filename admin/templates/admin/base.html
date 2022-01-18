@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('admin.static', filename='css/menu.css') }}"/>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('admin.static', filename='css/styles.css') }}"/>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('admin.static', filename='css/table.css') }}"/>
+
+    <script type="text/javascript" src="{{ url_for('admin.static', filename='js/script.js') }}"></script>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <div class="header">
+
+        <div class="inner-header" style="text-align:center;">
+
+            <img src="static/img/logo.png" height="120px;">
+
+            <a href="sign-in">
+
+                {% if(user.is_authorized()) %}
+
+                <img src="static/img/unlock.png" height="60px;" align="right" style="margin-top:10px; margin-right:50px;">
+
+                {% else %}
+
+                <img src="static/img/lock.png" height="60px;" align="right" style="margin-top:10px; margin-right:50px;">
+
+                {% endif %}
+
+                <p align="right" style="margin-top: -40px; padding-right:10px;">{{user.get_name()}}</p>
+
+            </a>
+
+        </div>
+
+    </div>
+
+ <div class="pagination">
+
+        <div class="inner-pagination">
+
+            <nav class="three" style="text-align:center;">
+
+                <ul>
+
+                    <li><a href="stats">Статистика</a></li>
+
+                    <li><a href="new_questions">Створити запитання</a></li>
+
+                    <li><a href="themes">Перегляд тем</a></li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+    {% block content %} {% endblock %}
+
+</div>
+
+</body>
+
+</html>

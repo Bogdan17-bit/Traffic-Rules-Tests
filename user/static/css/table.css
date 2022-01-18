@@ -1,0 +1,23 @@
+.table {
+	width: 1065px;
+	margin-bottom: 20px;
+	border: 15px solid rgb(170,234,135)
+	border-top: 5px solid rgba(190, 215, 139, .3)
+	border-collapse: collapse;
+}
+.table th {
+	font-weight: bold;
+	padding: 5px;
+	background: rgba(186, 215, 139, .3);
+	border: none;
+	color: #74924C;
+	border-bottom: 5px solid #F2F8F8;
+	font-family: lucida console;
+}
+.table td {
+	padding: 5px;
+	border: none;
+	border-bottom: 3px solid rgb(170,234,135);
+	font-family: lucida console;
+	transition: .5s linear;
+}

@@ -1,0 +1,93 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<link type="text/css" rel="stylesheet" href="{{ url_for('admin.static', filename='css/add_styles.css') }}"/>
+
+<center>
+
+	<table class="table">
+
+		<thead>
+
+			<tr>
+
+				<th colspan="2">Перелік усіх існуючих тем</th>
+
+			</tr>
+
+		</thead>
+
+		{% for one in themes %}
+
+		<tbody>
+
+			<tr>
+
+				<td width="80%"> {{ loop.index }} {{ one.text }}</td>
+
+                <td width="20%">
+
+                    <img src="data:;base64, {{ images[loop.index-1]}}" width="150px;">
+
+                </td>
+
+            </tr>
+
+		</tbody>
+
+		{% endfor %}
+
+	</table>
+
+</center>
+
+<div style="margin-left:40px;">
+
+    <div style="max-width: 600px; margin-left: auto; margin-right: auto; padding: 15px;">
+
+        <form id="add_new_theme" method="post" enctype="multipart/form-data" action="http://localhost:5000/admin/create-theme">
+
+            <div class="text-field">
+
+                <div style="margin-top:10px;">
+
+                    <label class="text-field__label" style="font-size:20px">Створити нову тему білета</label>
+
+                </div>
+
+                 <div style="margin-top:10px;">
+
+                     <input class="text-field__input" type="text" name="theme" id="theme" placeholder="Назва теми" required>
+
+                 </div>
+
+                    <label class="text-field__label" style="font-size:20px; margin-top:20px;">Додайте зображення до нової теми</label>
+
+                <input type="file" name="file" id="file" style="margin-top:20px; font-size:15px;" required>
+
+                <img src='' id='preview' style="width:200px; margin-top:25px;"/>
+
+                     <p>
+
+                         <input type="submit" value="Створити" style="font-size:15px">
+
+                         <input type="reset" value="Очистити" style="font-size:15px">
+
+                     </p>
+
+                 </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+      <script>
+
+      document.querySelector('#email').focus();
+
+      </script>
+
+{% endblock %}

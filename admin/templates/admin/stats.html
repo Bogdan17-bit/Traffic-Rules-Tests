@@ -1,0 +1,53 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+<center>
+
+	<table class="table">
+
+		<thead>
+
+			<tr>
+
+				<th>Дата проходження</th>
+
+				<th>Ім'я користувача</th>
+
+				<th>Правильних відповідей</th>
+
+				<th>Правильних відповідей(%)</th>
+
+				<th>Тест складено</th>
+
+			</tr>
+
+		</thead>
+
+		{% for index in range(20) %}
+
+		<tbody>
+
+			<tr>
+
+				<td>Gloria</td>
+
+				<td>Reeves</td>
+
+				<td>67439</td>
+
+				<td>10/18/1985</td>
+
+				<td>4</td>
+
+			</tr>
+
+		</tbody>
+
+		{% endfor %}
+
+	</table>
+
+</center>
+
+{% endblock %}

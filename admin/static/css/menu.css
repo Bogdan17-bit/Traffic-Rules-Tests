@@ -1,0 +1,38 @@
+ul {
+  list-style: none;
+  margin: 0 auto;
+}
+
+a {
+  text-decoration: none;
+  font-family: lucida console;
+  transition: .5s linear;
+}
+
+i {
+  margin-right: 10px;
+}
+
+.three ul {
+  padding: 0;
+  border-color: #71e761;
+}
+
+.three li {
+  display: inline-block;
+  width: 350px;
+}
+
+.three a {
+  padding: 1em;
+  display: block;
+  color: #74924C;
+  border-right: 1px solid #BAD78B;
+  background: rgba(186, 215, 139, .3);
+}
+
+.three a:hover {background: #BAD78B}
+
+#preview {
+  display: none;
+}

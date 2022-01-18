@@ -1,0 +1,132 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+
+<link type="text/css" rel="stylesheet" href="{{ url_for('admin.static', filename='css/add_styles.css') }}"/>
+
+<div style="margin-left:40px;">
+
+    <form id="add_new_question" method="post" enctype="multipart/form-data" action="http://localhost:5000/admin/upload">
+
+        <div style="max-width: 600px; margin-left: auto; margin-right: auto; padding: 15px;">
+
+        <div class="text-field">
+
+            <div style="margin-top:10px;">
+
+                <label class="text-field__label">Тема білета</label>
+
+            </div>
+
+            <div style="margin-top:10px;">
+
+                <select id="theme_selector" name="theme_selector" class="text-field__select" onclick="SelectorOpen({{length_list}})" onblur="SelectorClose()">
+
+                    {% for theme in themes %}
+
+                    <option> {{ theme.text }} </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div id="dynamic_div" style="margin-top:20px;">
+
+                <label class="text-field__label">Запитання</label>
+
+            </div>
+
+             <div style="margin-top:10px;">
+
+                 <input class="text-field__input" type="text" name="question" id="question" placeholder="Текст запитання" required>
+
+             </div>
+
+             <div style="margin-top:10px;">
+
+                 <label class="text-field__label">Відповідь №1</label>
+
+             </div>
+
+             <div>
+
+                 <div style="float:right;margin-top: 0.5em;">
+
+                     <input style="transform:scale(2);" type="radio" value="first" name="group" checked>
+
+                 </div>
+
+                 <div>
+
+                     <input class="text-field__input" type="text" name="first" id="first" placeholder="Текст відповіді">
+
+                 </div>
+
+             </div>
+
+             <div style="margin-top:10px;">
+
+             <label class="text-field__label">Відповідь №2</label>
+
+                 <div style="float:right;margin-top: 0.5em;">
+
+                     <input style="transform:scale(2);" type="radio" value="second" name="group" >
+
+                 </div>
+
+                 <div>
+
+                     <input class="text-field__input" type="text" name="second" id="second" placeholder="Текст відповіді">
+
+                 </div>
+
+             </div>
+
+             <div style="margin-top:10px;">
+
+             <label class="text-field__label">Відповідь №3</label>
+
+                 <div style="float:right;margin-top: 0.5em;">
+
+                     <input style="transform:scale(2);" type="radio" value="third" name="group" >
+
+                 </div>
+
+                 <div>
+
+                     <input class="text-field__input" type="text" name="third" id="third" placeholder="Текст відповіді">
+
+                 </div>
+
+                 <input type="file" name="file" id="file" style="margin-top:20px; font-size:15px;">
+
+                 <img src='' id='preview' style="margin-top:20px; width:200px;"/>
+
+                 <p style="margin-top:20px;">
+
+                     <input type="submit" value="Створити" style="font-size:15px">
+
+                     <input type="reset" value="Очистити" style="font-size:15px">
+
+                 </p>
+
+             </div>
+
+        </div>
+
+    </div>
+
+    </form>
+
+      <script>
+
+      document.querySelector('#email').focus();
+
+      </script>
+
+</div>
+
+{% endblock %}
