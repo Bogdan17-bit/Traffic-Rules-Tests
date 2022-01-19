@@ -36,3 +36,6 @@ document.addEventListener('change', function () {
   }
   check();
 })
+
+var delay = 1000;
+setTimeout("document.getElementById('modal1').style.display='block'", delay);

@@ -28,23 +28,44 @@ def link_on_main():
 def statistics():
     results_tests = DataBase.get_history_user(Visitor.get_name())
     if results_tests.tests is not None:
-        return render_template('user/statistics.html', user=Visitor, tests=results_tests.tests)
+        return render_template('user/statistics.html', user=Visitor, tests=results_tests.tests, number_results_find=len(results_tests.tests))
     else:
-        return render_template('user/statistics.html', user=Visitor)
+        return render_template('user/statistics.html', user=Visitor, number_results_find=0)
 
 
-@user.route('/random_questions')
+@user.route('/random_questions', methods=("GET", "POST"))
 def home():
-    list_questions = DataBase.get_questions()
-    numbers = list(range(1, 39))
-    shuffle(numbers)
-    last_lst = []
-    numbers = numbers[:5]
-    for number in numbers:
-        last_lst.append(list_questions[number])
-    for one in last_lst:
-        one.img = base64.b64encode(one.img).decode('ascii')
-    return render_template('user/main.html', user=Visitor, questions=last_lst)
+    if request.method == 'GET':
+        list_questions = DataBase.get_questions()
+        numbers = list(range(1, 39))
+        shuffle(numbers)
+        last_lst = []
+        numbers = numbers[:5]
+        for number in numbers:
+            last_lst.append(list_questions[number])
+        for one in last_lst:
+            if isinstance(one.img, str) is False:
+                one.img = base64.b64encode(one.img).decode('ascii')
+        return render_template('user/main.html', user=Visitor, questions=last_lst)
+    elif request.method == 'POST':
+        list_questions = DataBase.get_questions()
+        numbers = list(range(1, 39))
+        shuffle(numbers)
+        last_lst = []
+        numbers = numbers[:5]
+        for number in numbers:
+            last_lst.append(list_questions[number])
+        for one in last_lst:
+            if isinstance(one.img, str) is False:
+                one.img = base64.b64encode(one.img).decode('ascii')
+        print('IT MY FUCKING SUBMIT BUTTON VALUE')
+        print(request.form.get('submit_button'))
+        if Visitor.is_authorized():
+            Visitor.save_results(int(request.form['submit_button']), 5)
+        if Visitor.test_is_pass(int(request.form['submit_button']), 5):
+            return render_template('user/main.html', user=Visitor, questions=last_lst, test_is_pass='True')
+        else:
+            return render_template('user/main.html', user=Visitor, questions=last_lst, test_is_pass='False')
 
 
 @user.route('/login', methods=("GET", "POST"))
@@ -82,6 +103,7 @@ def sign():
 
 @user.route('/send', methods=("GET", "POST"))
 def send():
+    print("NOW WE WE MUST GET VALUE FROM SUBMIT BUTTON")
     print(request.form['submit_button'])
     if Visitor.is_authorized():
         Visitor.save_results(int(request.form['submit_button']), 5)
@@ -108,6 +130,7 @@ def test_from_theme():
     questions = DataBase.get_list_questions_from_theme(theme)
     counters = 0
     for question in questions:
-        question.img = base64.b64encode(question.img).decode('ascii')
+        if isinstance(question.img, str) is False:
+            question.img = base64.b64encode(question.img).decode('ascii')
         counters += 1
     return render_template('user/test-from-theme.html', questions=questions,  user=Visitor, theme=theme, test_len=counters)

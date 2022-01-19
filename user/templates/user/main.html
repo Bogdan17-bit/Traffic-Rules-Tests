@@ -3,7 +3,48 @@
 {% block content %}
 
 <link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/add_styles.css') }}"/>
+
 <link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/table.css') }}"/>
+
+<link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/modal.css') }}"/>
+
+{% if test_is_pass == 'True' %}
+
+  <section id="successMessage" class="Message">
+
+	  <div class="popup" style="border-width:1;border-color: #74924C; background:rgb(199,239,188);border-style: solid;">
+
+		  <p style=" text-align: center;">Ви успішно склали тест! <br> Ваш результат збережено.</p>
+
+	  </div>
+
+  </section>
+
+  <script type="text/javascript" charset="utf-8">
+
+    setTimeout(() => successMessage.hidden = true, 2500)
+
+</script>
+
+{% elif test_is_pass == 'False' %}
+
+  <section id="failureMessage" class="Message">
+
+    <div class="popup" style="border-width:1;border-color: rgb(232,87,80); background:rgb(255,186,112);border-style: solid;">
+
+      <p style=" text-align: center;">Ви не склали тест! <br> Ваш результат збережено.</p>
+
+    </div>
+
+  </section>
+
+  <script type="text/javascript" charset="utf-8">
+
+    setTimeout(() => failureMessage.hidden = true, 2500)
+
+  </script>
+
+{% endif %}
 
 <form id="test" method="post" action="http://localhost:5000/home/random_questions">
 

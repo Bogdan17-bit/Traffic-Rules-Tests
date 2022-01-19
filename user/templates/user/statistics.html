@@ -24,6 +24,16 @@
 
 		</thead>
 
+		{% if number_results_find == 0 %}
+
+		<tbody>
+
+		<tr><td colspan="4" align="center" style="color: #74924C;">Ця таблиця порожня! Наразі Ви не пройшли жодного випадкового тесту.</td></tr>
+
+		</tbody>
+
+		{% else %}
+
 		{% for test_completed in tests %}
 
 		<tbody>
@@ -51,6 +61,8 @@
 		</tbody>
 
 		{% endfor %}
+
+		{% endif %}
 
 	</table>
 
