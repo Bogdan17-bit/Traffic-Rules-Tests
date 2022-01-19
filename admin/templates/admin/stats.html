@@ -24,27 +24,51 @@
 
 		</thead>
 
-		{% for index in range(20) %}
+		{% if tests_number < 1 %}
 
 		<tbody>
 
-			<tr>
-
-				<td>Gloria</td>
-
-				<td>Reeves</td>
-
-				<td>67439</td>
-
-				<td>10/18/1985</td>
-
-				<td>4</td>
-
-			</tr>
+		<tr><td colspan="5" align="center" style="color: #74924C;">Ця таблиця порожня! Наразі не існує жодного запису результатів.</td></tr>
 
 		</tbody>
 
-		{% endfor %}
+		{% else %}
+
+			{% for user_one in users_history %}
+
+			{% for test in user_one.tests %}
+
+			<tbody>
+
+			<tr>
+
+				<td align="center"> {{ test.date }} </td>
+
+				<td align="center"> {{ user_one.login }} </td>
+
+				<td align="center"> {{ test.correct_answers_number }} </td>
+
+				<td align="center"> {{ test.correct_answers_percent }} </td>
+
+				{% if test.complete %}
+
+				<td > Так </td>
+
+				{% else %}
+
+				<td align="center">Ні</td>
+
+				{% endif %}
+
+			</tr>
+
+			</tbody>
+
+			{% endfor %}
+
+			{% endfor %}
+
+		{% endif %}
 
 	</table>
 

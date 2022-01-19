@@ -57,7 +57,7 @@ def home():
 
 @admin.route('/stats')
 def stats():
-    return render_template('admin/stats.html', user=Admin)
+    return render_template('admin/stats.html', user=Admin, users_history=Admin.get_users_history(), tests_number=len(Admin.get_history()))
 
 
 @admin.route('/new_questions')

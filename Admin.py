@@ -6,6 +6,14 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 class Admin(Visitor):
     @classmethod
+    def get_users_history(cls):
+        return DataBase.get_users_history()
+
+    @classmethod
+    def get_history(cls):
+        return DataBase.get_history()
+
+    @classmethod
     def create_answer(cls, text, id_question, is_correct):
         new_answer = Answers(text=text, id_question=id_question, correct=is_correct)
         DataBase.load_object(new_answer)

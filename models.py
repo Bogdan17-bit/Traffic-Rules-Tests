@@ -34,7 +34,7 @@ class Answers(db.Model):
 
 class History(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     correct_answers_number = db.Column(db.Integer, nullable=False)
     correct_answers_percent = db.Column(db.Integer, nullable=False)
     complete = db.Column(db.Boolean, nullable=False)

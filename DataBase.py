@@ -1,10 +1,17 @@
 from models import *
 from flask import flash
 from werkzeug.security import check_password_hash
-from sqlalchemy.sql.expression import func, select
 
 
 class DataBase:
+    @classmethod
+    def get_users_history(cls):
+        return Users.query.all()
+
+    @classmethod
+    def get_history(cls):
+        return History.query.all()
+
     @classmethod
     def get_list_questions_from_theme(cls, theme):
         return Questions.query.filter_by(theme=theme)
