@@ -4,6 +4,45 @@
 
 <link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/table.css') }}"/>
 <link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/custom-buttons.css') }}"/>
+<link type="text/css" rel="stylesheet" href="{{ url_for('user.static', filename='css/modal.css') }}"/>
+
+{% if test_is_pass == 'True' %}
+
+  <section id="successMessage" class="Message">
+
+	  <div class="popup" style="border-width:1;border-color: #74924C; background:rgb(199,239,188);border-style: solid; align-items: center">
+
+		  <p style="text-align: center; font-size:14pt; font-family: lucida console;"> Ви успішно склали тест! </p>
+
+	  </div>
+
+  </section>
+
+  <script type="text/javascript" charset="utf-8">
+
+    setTimeout(() => successMessage.hidden = true, 2500)
+
+</script>
+
+{% elif test_is_pass == 'False' %}
+
+  <section id="failureMessage" class="Message">
+
+    <div class="popup" style="border-width:1;border-color: rgb(232,87,80); background:rgb(255,186,112);border-style: solid;">
+
+		<p style=" text-align: center; font-size:14pt;font-family: lucida console;"> Ви не склали тест!</p>
+
+    </div>
+
+  </section>
+
+  <script type="text/javascript" charset="utf-8">
+
+    setTimeout(() => failureMessage.hidden = true, 2500)
+
+  </script>
+
+{% endif %}
 
 <center>
 
@@ -35,7 +74,7 @@
 
 							<tr>
 								<td style="border-bottom:0px;">
-									<button value="{{ one.text }}" class="button button1" name="start_button" id="submit_button" style="font-size:15px; margin-bottom:10px;" > Розпочати тест</button>
+									<button value="{{ one.text }}" class="button button1" name="start_button" id="start_button" style="font-size:15px; margin-bottom:10px;" > Розпочати тест</button>
 								</td>
 							</tr>
 

@@ -37,7 +37,7 @@ def statistics():
 def home():
     if request.method == 'GET':
         list_questions = DataBase.get_questions()
-        numbers = list(range(1, 39))
+        numbers = list(range(0, 39))
         shuffle(numbers)
         last_lst = []
         numbers = numbers[:5]
@@ -103,7 +103,6 @@ def sign():
 
 @user.route('/send', methods=("GET", "POST"))
 def send():
-    print("NOW WE WE MUST GET VALUE FROM SUBMIT BUTTON")
     print(request.form['submit_button'])
     if Visitor.is_authorized():
         Visitor.save_results(int(request.form['submit_button']), 5)
@@ -113,10 +112,18 @@ def send():
 @user.route('/questions_without_answers',  methods=("GET", "POST"))
 @login_required
 def only_questions():
-    return render_template('user/questions.html', user=Visitor, themes=DataBase.get_themes(), images=get_refreshed_list_images())
+    if request.method == 'GET':
+        return render_template('user/questions.html', user=Visitor, themes=DataBase.get_themes(), images=get_refreshed_list_images_for_themes())
+    elif request.method == 'POST':
+        if request.form.get('submit_button'):
+            all_themes = DataBase.get_themes()
+            test_is_pass = 'False'
+            if Visitor.test_is_pass(int(request.form['submit_button']), 5):
+                test_is_pass = 'True'
+            return render_template('user/questions.html', user=Visitor, themes=all_themes, test_is_pass=test_is_pass, images=get_refreshed_list_images_for_themes())
 
 
-def get_refreshed_list_images():
+def get_refreshed_list_images_for_themes():
     all_themes_from_db = Admin.get_list_themes()
     all_images = []
     for theme in all_themes_from_db:
@@ -126,11 +133,13 @@ def get_refreshed_list_images():
 
 @user.route('/test-from-theme', methods=("GET", "POST"))
 def test_from_theme():
-    theme = request.form['start_button']
-    questions = DataBase.get_list_questions_from_theme(theme)
-    counters = 0
-    for question in questions:
-        if isinstance(question.img, str) is False:
-            question.img = base64.b64encode(question.img).decode('ascii')
-        counters += 1
-    return render_template('user/test-from-theme.html', questions=questions,  user=Visitor, theme=theme, test_len=counters)
+    if request.method == 'POST':
+        if request.form.get('start_button'):
+            theme = request.form['start_button']
+            questions = DataBase.get_list_questions_from_theme(theme)
+            counter = 0
+            for question in questions:
+                if isinstance(question.img, str) is False:
+                    question.img = base64.b64encode(question.img).decode('ascii')
+                counter += 1
+            return render_template('user/test-from-theme.html', user=Visitor, questions=questions, theme=theme, test_len=counter)
