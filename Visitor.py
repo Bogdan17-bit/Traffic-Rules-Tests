@@ -5,6 +5,8 @@ from datetime import datetime
 
 
 class Visitor:
+    number_questions = 5
+
     @classmethod
     def test_is_pass(cls, number_correct, number_all_answers):
         if cls.percent_correct(number_correct, number_all_answers) >= 80:

@@ -1,9 +1,8 @@
 import base64
 from functools import wraps
-from flask import Flask, render_template, request, redirect, url_for, make_response, Blueprint
+from flask import render_template, request, redirect, url_for, make_response, Blueprint
 import time
 from Visitor import Visitor, DataBase
-from Admin import Admin
 from random import shuffle
 
 user = Blueprint('user', __name__, static_folder='static', template_folder='templates')
@@ -124,7 +123,7 @@ def only_questions():
 
 
 def get_refreshed_list_images_for_themes():
-    all_themes_from_db = Admin.get_list_themes()
+    all_themes_from_db = DataBase.get_themes()
     all_images = []
     for theme in all_themes_from_db:
         all_images.append(base64.b64encode(theme.img).decode('ascii'))

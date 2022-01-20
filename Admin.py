@@ -1,10 +1,17 @@
 from Visitor import Visitor
 from DataBase import DataBase, Questions, Answers, Themes
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import scoped_session, sessionmaker
+import base64
 
 
 class Admin(Visitor):
+    @classmethod
+    def get_refreshed_list_images(cls):
+        all_themes_from_db = Admin.get_list_themes()
+        all_images = []
+        for theme in all_themes_from_db:
+            all_images.append(base64.b64encode(theme.img).decode('ascii'))
+        return all_images
+
     @classmethod
     def get_users_history(cls):
         return DataBase.get_users_history()
@@ -41,5 +48,5 @@ class Admin(Visitor):
 
     @classmethod
     def get_list_themes(cls):
-        return Themes.query.all()
+        return DataBase.get_themes()
 
