@@ -41,3 +41,8 @@ function SelectorOpen(counts) {
 function SelectorClose() {
     document.getElementById('dynamic_div').style.marginTop = '20px';
 }
+
+function reset_image() {
+    image = document.getElementById('preview')
+    image.src = ''
+}

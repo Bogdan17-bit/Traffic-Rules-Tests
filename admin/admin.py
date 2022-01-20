@@ -10,7 +10,7 @@ admin = Blueprint('admin', __name__, template_folder='templates', static_folder=
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if Admin.is_authorized() is not True:
+        if Admin.is_admin() is not True:
             return redirect(url_for('user.sign', next=request.url))
         return f(*args, **kwargs)
     return decorated_function

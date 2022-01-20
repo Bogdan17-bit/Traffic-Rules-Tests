@@ -14,7 +14,7 @@ function check() {
     }
     var submit_btn = document.getElementById('submit_button');
     submit_btn.disabled = false;
-    submit_btn.value = String(counter_right_answers)
+    submit_btn.value += String(counter_right_answers)
 }
 
 document.addEventListener('change', function () {

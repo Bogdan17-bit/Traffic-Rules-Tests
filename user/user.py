@@ -34,34 +34,22 @@ def statistics():
 
 @user.route('/random_questions', methods=("GET", "POST"))
 def home():
+    list_questions = DataBase.get_questions()
+    numbers = list(range(0, 39))
+    shuffle(numbers)
+    last_lst = []
+    numbers = numbers[:10]
+    for number in numbers:
+        last_lst.append(list_questions[number])
+    for one in last_lst:
+        if isinstance(one.img, str) is False:
+            one.img = base64.b64encode(one.img).decode('ascii')
     if request.method == 'GET':
-        list_questions = DataBase.get_questions()
-        numbers = list(range(0, 39))
-        shuffle(numbers)
-        last_lst = []
-        numbers = numbers[:5]
-        for number in numbers:
-            last_lst.append(list_questions[number])
-        for one in last_lst:
-            if isinstance(one.img, str) is False:
-                one.img = base64.b64encode(one.img).decode('ascii')
         return render_template('user/main.html', user=Visitor, questions=last_lst)
     elif request.method == 'POST':
-        list_questions = DataBase.get_questions()
-        numbers = list(range(1, 39))
-        shuffle(numbers)
-        last_lst = []
-        numbers = numbers[:5]
-        for number in numbers:
-            last_lst.append(list_questions[number])
-        for one in last_lst:
-            if isinstance(one.img, str) is False:
-                one.img = base64.b64encode(one.img).decode('ascii')
-        print('IT MY FUCKING SUBMIT BUTTON VALUE')
-        print(request.form.get('submit_button'))
         if Visitor.is_authorized():
-            Visitor.save_results(int(request.form['submit_button']), 5)
-        if Visitor.test_is_pass(int(request.form['submit_button']), 5):
+            Visitor.save_results(int(request.form['submit_button']), 10)
+        if Visitor.test_is_pass(int(request.form['submit_button']), 10):
             return render_template('user/main.html', user=Visitor, questions=last_lst, test_is_pass='True')
         else:
             return render_template('user/main.html', user=Visitor, questions=last_lst, test_is_pass='False')
@@ -102,7 +90,6 @@ def sign():
 
 @user.route('/send', methods=("GET", "POST"))
 def send():
-    print(request.form['submit_button'])
     if Visitor.is_authorized():
         Visitor.save_results(int(request.form['submit_button']), 5)
     return redirect(url_for('home'))
@@ -117,7 +104,9 @@ def only_questions():
         if request.form.get('submit_button'):
             all_themes = DataBase.get_themes()
             test_is_pass = 'False'
-            if Visitor.test_is_pass(int(request.form['submit_button']), 5):
+            result = request.form['submit_button']
+            questions = result.split('/')
+            if Visitor.test_is_pass(int(questions[1]), int(questions[0])):
                 test_is_pass = 'True'
             return render_template('user/questions.html', user=Visitor, themes=all_themes, test_is_pass=test_is_pass, images=get_refreshed_list_images_for_themes())
 
