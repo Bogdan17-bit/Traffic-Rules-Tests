@@ -22,6 +22,11 @@ def link_on_main():
     return redirect(url_for('user.home'))
 
 
+@user.route('/game', methods=('GET', 'POST'))
+def game():
+    return render_template('user/v4.final.html')
+
+
 @user.route('/statistics',  methods=("GET", "POST"))
 @login_required
 def statistics():
